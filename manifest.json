@@ -1,0 +1,16 @@
+{
+  "name": "PastelCalc",
+  "short_name": "PastelCalc",
+  "start_url": "/mimi/",
+  "display": "standalone",
+  "background_color": "#f2f6ff",
+  "theme_color": "#f2f6ff",
+  "description": "A cute and simple pastel-colored calculator app.",
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
