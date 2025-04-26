@@ -4,10 +4,139 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pastel Calculator</title>
-  <!-- 여기에 스타일과 스크립트 코드 들어가 -->
+  <style>
+    body {
+      background: #f2f6ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Helvetica', sans-serif;
+    }
+    .calculator {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 30px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      width: 320px;
+    }
+    .display {
+      background: #e8f0fe;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      padding: 20px;
+      font-size: 2rem;
+      text-align: right;
+      overflow-x: auto;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+    button {
+      background: #cde7f0;
+      border: none;
+      border-radius: 50%;
+      padding: 20px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #b8dfea;
+    }
+    .operator {
+      background: #ffd6e7;
+    }
+    .operator:hover {
+      background: #fbc2d9;
+    }
+    .equal {
+      background: #d4f5dc;
+      grid-column: span 2;
+    }
+    .equal:hover {
+      background: #b8ebc8;
+    }
+  </style>
 </head>
 <body>
-  <h1>계산기 화면</h1>
-  <!-- 여기에 계산기 버튼 추가 -->
+
+<div class="calculator">
+  <div id="display" class="display">0</div>
+  <div class="buttons">
+    <button onclick="appendNumber('7')">7</button>
+    <button onclick="appendNumber('8')">8</button>
+    <button onclick="appendNumber('9')">9</button>
+    <button class="operator" onclick="chooseOperator('/')">÷</button>
+
+    <button onclick="appendNumber('4')">4</button>
+    <button onclick="appendNumber('5')">5</button>
+    <button onclick="appendNumber('6')">6</button>
+    <button class="operator" onclick="chooseOperator('*')">×</button>
+
+    <button onclick="appendNumber('1')">1</button>
+    <button onclick="appendNumber('2')">2</button>
+    <button onclick="appendNumber('3')">3</button>
+    <button class="operator" onclick="chooseOperator('-')">-</button>
+
+    <button onclick="appendNumber('0')">0</button>
+    <button onclick="clearDisplay()">C</button>
+    <button class="equal" onclick="calculate()">=</button>
+    <button class="operator" onclick="chooseOperator('+')">+</button>
+  </div>
+</div>
+
+<script>
+  let currentInput = '';
+  let operator = '';
+  let firstOperand = '';
+
+  function appendNumber(number) {
+    if (currentInput === '0') currentInput = '';
+    currentInput += number;
+    updateDisplay(currentInput);
+  }
+
+  function chooseOperator(op) {
+    if (currentInput === '') return;
+    if (firstOperand !== '') calculate();
+    operator = op;
+    firstOperand = currentInput;
+    currentInput = '';
+  }
+
+  function calculate() {
+    if (firstOperand === '' || currentInput === '') return;
+    let result;
+    const a = parseFloat(firstOperand);
+    const b = parseFloat(currentInput);
+
+    switch (operator) {
+      case '+': result = a + b; break;
+      case '-': result = a - b; break;
+      case '*': result = a * b; break;
+      case '/': result = b !== 0 ? a / b : 'Error'; break;
+      default: return;
+    }
+    updateDisplay(result);
+    firstOperand = '';
+    currentInput = result.toString();
+  }
+
+  function clearDisplay() {
+    currentInput = '';
+    operator = '';
+    firstOperand = '';
+    updateDisplay('0');
+  }
+
+  function updateDisplay(value) {
+    document.getElementById('display').textContent = value;
+  }
+</script>
+
 </body>
 </html>
